@@ -73,6 +73,62 @@
                     transform: scale(0.5);
                 }
             }
+
+            .music-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 120px;
+                display: flex;
+                align-items: center;
+                padding-left: 40px;
+                box-sizing: border-box;
+                pointer-events: none;
+            }
+
+            .treble {
+                width: 80px;
+                height: 100px;
+                margin-right: 20px;
+            }
+
+            .treble img {
+                height: 100%;
+            }
+
+            .staff {
+                position: relative;
+                flex: 1;
+                height: 100px;
+                padding-right: 80px;
+                box-sizing: border-box;
+            }
+
+            .staff::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: calc(100% - 80px);
+                height: 100%;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    transparent 0px,
+                    transparent 16px,
+                    rgba(255, 255, 255, 0.6) 17px,
+                    rgba(255, 255, 255, 0.6) 18px
+                );
+            }
+
+            .note {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+            }
+            .note img {
+                width: 100%;
+            }
         </style>
     </head>
 
@@ -87,6 +143,38 @@
             />
 
             <div class="sparkle" id="sparkleLayer"></div>
+
+            <div class="music-bar">
+                <div class="treble">
+                    <img
+                        src="https://png.pngtree.com/png-vector/20250813/ourmid/pngtree-light-to-dark-music-symbol-on-white-background-png-image_17146256.webp"
+                        alt="treble"
+                    />
+                </div>
+
+                <div class="staff" id="staff">
+                    <div class="note">
+                        <img
+                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                        />
+                    </div>
+                    <div class="note">
+                        <img
+                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                        />
+                    </div>
+                    <div class="note">
+                        <img
+                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                        />
+                    </div>
+                    <div class="note">
+                        <img
+                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>
@@ -99,7 +187,7 @@
             function randomGlitchLoop() {
                 if (!running) return;
 
-                const strongCount = Math.floor(Math.random() * 4) + 2; // 2~5회
+                const strongCount = Math.floor(Math.random() * 4) + 2;
                 let i = 0;
 
                 function strongBurst() {
@@ -116,7 +204,7 @@
                 }
 
                 function softPhase() {
-                    const duration = 500 + Math.random() * 1500; // 0.5~2초 유지
+                    const duration = 500 + Math.random() * 1500;
                     const start = Date.now();
 
                     function softMove() {
@@ -164,6 +252,41 @@
                 running = true;
                 logo.src = logo.dataset.default;
                 randomGlitchLoop();
+            });
+
+            const notes = document.querySelectorAll('.note');
+            const staff = document.getElementById('staff');
+
+            notes.forEach((note, index) => {
+                let staffWidth = staff.offsetWidth;
+
+                let x = Math.random() * (staffWidth - 60);
+                let baseY = 40 + Math.random() * 20;
+                let amplitude = 15 + Math.random() * 15;
+                let frequency = 0.01 + Math.random() * 0.02;
+                let speed = 0.3 + Math.random() * 0.4;
+
+                function animate() {
+                    staffWidth = staff.offsetWidth;
+                    x += speed;
+
+                    if (x > staffWidth - 40) {
+                        x = 0;
+
+                        amplitude = 15 + Math.random() * 20;
+                        frequency = 0.01 + Math.random() * 0.02;
+                        speed = 0.3 + Math.random() * 0.4;
+                        baseY = 40 + Math.random() * 20;
+                    }
+
+                    const y = baseY + Math.sin(x * frequency) * amplitude;
+
+                    note.style.transform = `translate(${x}px, ${y}px)`;
+
+                    requestAnimationFrame(animate);
+                }
+
+                animate();
             });
         </script>
     </body>
