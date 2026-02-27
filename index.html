@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>MYPINKLIVE</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link rel="stylesheet" href="style.css" />
     </head>
@@ -41,7 +42,45 @@
             <button class="home-btn" id="homeBtn" type="button" aria-label="Back to home">Home</button>
 
             <div class="overlay-panel" id="overlayPanel">
-                <div class="overlay-contents" id="tabContents"></div>
+                <div class="overlay-contents">
+                    <!-- Page 0 -->
+                    <div class="tab-content" data-page="0">
+                        <img src="assets/content-c-1.png" />
+                        <!-- <h2>Profile</h2>
+                        <p>여기에 프로필 내용을 작성하세요.</p> -->
+                    </div>
+
+                    <!-- Page 1 -->
+                    <div class="tab-content" data-page="1">
+                        <img src="assets/content-c-2.png" />
+                        <!-- <div class="gallery-layout">
+                            <h2>Gallery</h2>
+                            <div class="grid">
+                                <div class="box">이미지1</div>
+                                <div class="box">이미지2</div>
+                                <div class="box">이미지3</div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <!-- Page 2 -->
+                    <div class="tab-content" data-page="2">
+                        <img src="assets/content-c-3.png" />
+                        <!-- <h2>Diary</h2>
+                        <textarea style="width: 100%; height: 200px"></textarea> -->
+                    </div>
+
+                    <!-- Page 3 -->
+                    <div class="tab-content" data-page="3">
+                        <img src="assets/content-c-4.png" />
+                        <!-- <h2>Contact</h2>
+                        <form>
+                            <input type="text" placeholder="Name" /><br /><br />
+                            <input type="email" placeholder="Email" /><br /><br />
+                            <button type="submit">Send</button>
+                        </form> -->
+                    </div>
+                </div>
             </div>
         </div>
     </body>

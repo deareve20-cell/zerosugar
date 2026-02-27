@@ -152,31 +152,34 @@ notes.forEach((note) => {
 // ---------- Overlay ----------
 function buildOverlay(activeIndex) {
     tabsContainer.innerHTML = '';
-    contentsContainer.innerHTML = '';
+
+    const pages = document.querySelectorAll('.tab-content');
+
+    pages.forEach((p) => p.classList.remove('active'));
 
     notes.forEach((note, index) => {
         const tab = document.createElement('div');
         tab.className = 'tab';
-        tab.textContent = `Tab ${index + 1}`;
 
-        const content = document.createElement('div');
-        content.className = 'tab-content';
-        content.innerHTML = `<h2>Page ${index + 1}</h2><p>내용 영역</p>`;
+        const originalImg = note.querySelector('img');
+        const img = document.createElement('img');
+        img.src = originalImg.src;
+        tab.appendChild(img);
 
         if (index === activeIndex) {
             tab.classList.add('active');
-            content.classList.add('active');
+            pages[index].classList.add('active');
         }
 
         tab.addEventListener('click', () => {
             document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach((c) => c.classList.remove('active'));
+            pages.forEach((p) => p.classList.remove('active'));
+
             tab.classList.add('active');
-            content.classList.add('active');
+            pages[index].classList.add('active');
         });
 
         tabsContainer.appendChild(tab);
-        contentsContainer.appendChild(content);
     });
 }
 
