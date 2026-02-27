@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <title>zerosugar</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <style>
+            body {
+                margin: 0;
+                height: 100vh;
+                background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2F8pIS4%2FdJMcaaYFPFj%2FAAAAAAAAAAAAAAAAAAAAABqOci_U8VRZpGefhtU7ZvFQOVVM9jMbt0qjKCe-hzzP%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3Dli7V7V548zgmu7RsTOcnbUIrpRE%253D')
+                    no-repeat center center;
+                background-size: cover;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            #logo {
+                width: 400px;
+                position: relative;
+                cursor: pointer;
+                transition: 0.3s ease;
+                z-index: 2;
+            }
+
+            #logo.glow {
+                filter: drop-shadow(0 0 6px rgba(255, 105, 180, 0.6)) drop-shadow(0 0 15px rgba(255, 105, 180, 0.4))
+                    drop-shadow(0 0 25px rgba(255, 182, 193, 0.3));
+            }
+
+            .soft-glitch {
+                transform: translate(calc((Math.random() - 0.5) * 2px), calc((Math.random() - 0.5) * 2px));
+            }
+
+            .strong-glitch {
+                transform: translate(calc((Math.random() - 0.5) * 8px), calc((Math.random() - 0.5) * 8px));
+            }
+
+            .sparkle {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 3;
+            }
+            .sparkle span {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: white;
+                border-radius: 50%;
+                opacity: 0;
+                animation: sparkleAnim 2s infinite;
+                box-shadow: 0 0 6px #fff;
+            }
+
+            @keyframes sparkleAnim {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1.2);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.5);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div style="position: relative">
+            <img
+                id="logo"
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                data-default="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                data-hover="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FwIDxv%2FdJMcabwvCFJ%2FAAAAAAAAAAAAAAAAAAAAALcQWdbBEgtz2UZ98uWzArCC9wgsQir0k0tCphEf5SoL%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3DqTluY8Mt4rf7Y0bZM3gmvUrCe6o%253D"
+                alt="logo"
+            />
+
+            <div class="sparkle" id="sparkleLayer"></div>
+        </div>
+
+        <script>
+            const logo = document.getElementById('logo');
+            const sparkleLayer = document.getElementById('sparkleLayer');
+
+            let running = true;
+            logo.classList.add('glow');
+
+            function randomGlitchLoop() {
+                if (!running) return;
+
+                const strongCount = Math.floor(Math.random() * 4) + 2; // 2~5회
+                let i = 0;
+
+                function strongBurst() {
+                    if (!running) return;
+
+                    if (i < strongCount) {
+                        logo.style.transform = `translate(${(Math.random() - 0.5) * 10}px, ${(Math.random() - 0.5) * 10}px)`;
+                        i++;
+                        setTimeout(strongBurst, 40 + Math.random() * 60);
+                    } else {
+                        logo.style.transform = 'translate(0,0)';
+                        softPhase();
+                    }
+                }
+
+                function softPhase() {
+                    const duration = 500 + Math.random() * 1500; // 0.5~2초 유지
+                    const start = Date.now();
+
+                    function softMove() {
+                        if (!running) return;
+
+                        logo.style.transform = `translate(${(Math.random() - 0.5) * 2}px, ${(Math.random() - 0.5) * 2}px)`;
+
+                        if (Date.now() - start < duration) {
+                            requestAnimationFrame(softMove);
+                        } else {
+                            logo.style.transform = 'translate(0,0)';
+                            setTimeout(randomGlitchLoop, 800 + Math.random() * 2000);
+                        }
+                    }
+
+                    softMove();
+                }
+
+                strongBurst();
+            }
+
+            randomGlitchLoop();
+
+            function createSparkle() {
+                if (!running) return;
+
+                const span = document.createElement('span');
+                span.style.top = Math.random() * 100 + '%';
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDuration = 1 + Math.random() * 2 + 's';
+                sparkleLayer.appendChild(span);
+
+                setTimeout(() => span.remove(), 3000);
+            }
+
+            setInterval(createSparkle, 300);
+
+            logo.addEventListener('mouseenter', () => {
+                running = false;
+                logo.style.transform = 'translate(0,0)';
+                logo.src = logo.dataset.hover;
+            });
+
+            logo.addEventListener('mouseleave', () => {
+                running = true;
+                logo.src = logo.dataset.default;
+                randomGlitchLoop();
+            });
+        </script>
+    </body>
+</html>
