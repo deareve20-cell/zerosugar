@@ -1,0 +1,224 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: url('assets/home-bg.jpg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.logo-center {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+#logo {
+    width: 400px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s ease;
+    z-index: 5;
+}
+
+#logo.glow {
+    filter: drop-shadow(0 0 6px rgba(255, 105, 180, 0.6)) drop-shadow(0 0 15px rgba(255, 105, 180, 0.4))
+        drop-shadow(0 0 25px rgba(255, 182, 193, 0.3));
+}
+
+.soft-glitch {
+    transform: translate(calc((Math.random() - 0.5) * 2px), calc((Math.random() - 0.5) * 2px));
+}
+
+.strong-glitch {
+    transform: translate(calc((Math.random() - 0.5) * 8px), calc((Math.random() - 0.5) * 8px));
+}
+
+.sparkle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+.sparkle span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkleAnim 2s infinite;
+    box-shadow: 0 0 6px #fff;
+}
+
+@keyframes sparkleAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+.music-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    box-sizing: border-box;
+    z-index: 20;
+}
+
+.treble {
+    width: 80px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.treble img {
+    height: 100%;
+}
+
+.staff {
+    position: relative;
+    flex: 1;
+    height: 100px;
+    padding-right: 80px;
+    box-sizing: border-box;
+}
+
+.staff::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 80px);
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 16px,
+        rgba(255, 255, 255, 0.6) 17px,
+        rgba(255, 255, 255, 0.6) 18px
+    );
+}
+
+.stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.note {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.note img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.18s ease;
+}
+
+.note.is-hover img {
+    transform: scale(1.18);
+}
+
+.note.to-center {
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: 0;
+    z-index: 3000;
+    transition: transform 0.6s ease;
+}
+
+/* ---------------- Overlay ---------------- */
+
+.overlay-wrapper {
+    position: fixed;
+    inset: 60px;
+    display: none;
+    z-index: 1500;
+}
+
+.overlay-wrapper.is-open {
+    display: block;
+}
+
+/* 탭은 흰 박스 바깥 위 */
+.overlay-tabs {
+    display: flex;
+    gap: 12px;
+    padding-left: 40px;
+    height: 52px;
+    align-items: flex-end;
+    user-select: none;
+}
+
+.tab {
+    padding: 12px 22px;
+    background: rgb(255 238 246);
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.tab.active {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+/* 흰 박스 */
+.overlay-panel {
+    position: relative;
+    height: calc(100% - 62px);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 22px;
+    padding: 3% 6%;
+    box-sizing: border-box;
+}
+
+/* 홈 버튼 */
+.home-btn {
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    background: #ff8ecb;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 800;
+    color: #fff;
+}
+
+/* 컨텐츠 */
+.overlay-contents .tab-content {
+    display: none;
+}
+.overlay-contents .tab-content.active {
+    display: block;
+}
