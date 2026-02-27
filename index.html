@@ -155,22 +155,22 @@
                 <div class="staff" id="staff">
                     <div class="note">
                         <img
-                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                            src="https://blog.kakaocdn.net/dna/VDCa4/dJMcaaEoXkK/AAAAAAAAAAAAAAAAAAAAAK8JFAP0mUXPt20WQpZnFf0gIzKHVC3mbOEv3BAr_-48/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1772290799&allow_ip=&allow_referer=&signature=0%2FcZCuvwkVbXCq8We46WXWj9d7s%3D"
                         />
                     </div>
                     <div class="note">
                         <img
-                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                            src="https://blog.kakaocdn.net/dna/oZPik/dJMcai3qxoI/AAAAAAAAAAAAAAAAAAAAAPrnV_eHf9F0Yxf7yAkoJIUZ6HAt_O30jUVzlPTjwSwm/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1772290799&allow_ip=&allow_referer=&signature=i3Jx2BhhISsOanWn%2FC1eQRybIUA%3D"
                         />
                     </div>
                     <div class="note">
                         <img
-                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                            src="https://blog.kakaocdn.net/dna/ymFNC/dJMcai3qxoJ/AAAAAAAAAAAAAAAAAAAAAF2NCtAd10-YfWvR1yFnUJQfcNUnN6ZwnIdkL4NAAtpL/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1772290799&allow_ip=&allow_referer=&signature=TEctN2UVxoLxswNYyuaHTjrcSjY%3D"
                         />
                     </div>
                     <div class="note">
                         <img
-                            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fd302Ym%2FdJMcafyWtHp%2FAAAAAAAAAAAAAAAAAAAAAG8de55LnwTgOJj3qiQrvtKuz8NOpc5C0c3XPJwRnN-N%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D2Ya9DRf46eZdcEi%252FycCioTgwDYc%253D"
+                            src="https://blog.kakaocdn.net/dna/OEOgH/dJMcai3qxoK/AAAAAAAAAAAAAAAAAAAAAKiNaDOXw7SIJ0ZVxxD-p92gyV2eQG5LYlXlRLmClxcc/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1772290799&allow_ip=&allow_referer=&signature=0Ra8%2F0zrywwoin3j3JDNPZZIFvg%3D"
                         />
                     </div>
                 </div>
@@ -257,10 +257,14 @@
             const notes = document.querySelectorAll('.note');
             const staff = document.getElementById('staff');
 
+            const rightMargin = 80; // CSS와 동일
+            const noteWidth = 40; // .note width와 동일
+
             notes.forEach((note, index) => {
                 let staffWidth = staff.offsetWidth;
+                let usableWidth = staffWidth - rightMargin - noteWidth;
 
-                let x = Math.random() * (staffWidth - 60);
+                let x = Math.random() * usableWidth;
                 let baseY = 40 + Math.random() * 20;
                 let amplitude = 15 + Math.random() * 15;
                 let frequency = 0.01 + Math.random() * 0.02;
@@ -268,9 +272,11 @@
 
                 function animate() {
                     staffWidth = staff.offsetWidth;
+                    usableWidth = staffWidth - rightMargin - noteWidth;
+
                     x += speed;
 
-                    if (x > staffWidth - 40) {
+                    if (x > usableWidth) {
                         x = 0;
 
                         amplitude = 15 + Math.random() * 20;
